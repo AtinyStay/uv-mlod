@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef short TypeEntier;
-TypeEntier factorielle(TypeEntier);
 
+// EXERCICE 1
 float calcul_prix_billet(float prix_plein_tarif, float age){
     float prix = prix_plein_tarif;
     if(age<=2){
@@ -16,6 +15,7 @@ float calcul_prix_billet(float prix_plein_tarif, float age){
 
 }
 
+// EXERCICE 3
 int parfait(int N){
     int sommeDiv=0;
     for(int i=1; i<N; i++){
@@ -27,6 +27,18 @@ int parfait(int N){
         return 1;
     return 0;
 }
+
+// EXERCICE 4
+typedef short TypeEntier;
+TypeEntier factorielle(TypeEntier n){
+    if(n==1)
+        return 1;
+    if(n>1)
+        return n*factorielle(n-1);
+    return 0;
+}
+
+
 
 int main(int argc, char *argv[]) {
 
@@ -67,13 +79,5 @@ int main(int argc, char *argv[]) {
     printf("%d\n",factorielle(n));
     
 
-    return 0;
-}
-
-TypeEntier factorielle(TypeEntier n){
-    if(n==1)
-        return 1;
-    if(n>1)
-        return n*factorielle(n-1);
     return 0;
 }
