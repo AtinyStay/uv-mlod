@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-
-void mult_matrice(int64_t (*)[5],int64_t (*)[5], int64_t (*)[5]);
-void affiche_matrice(int64_t (*)[5]);
+#include "Ex03.h"
 
 int main(void) {
     //matrices en ligne * colonne
@@ -33,7 +28,7 @@ void mult_matrice(int64_t (*resultat)[5],int64_t (*matriceA)[5], int64_t (*matri
 void affiche_matrice(int64_t (*matrice)[5]){
     for (int i = 0; i <5; i++){
         for (int j = 0; j <5; j++){
-            printf("%ld \t\t", matrice[i][j]);
+            printf("%ld \t", matrice[i][j]);
         }
         printf("\n");
     }
