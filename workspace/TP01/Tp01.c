@@ -46,7 +46,11 @@ int main(void) {
 
     // EXERCICE 3
     printf("\nExercice 3 - Nombres parfaits :\n");
-    parfaitJusquAN(lectureInt());
+    int N = lectureInt();
+    for (int i =0 ; i < N; i++){
+        if(parfait(i))
+            printf("%d\n",i);
+    }
     
 
     // EXERCICE 4
@@ -92,10 +96,7 @@ int parfait(int N){
 }
 
 void parfaitJusquAN(int N){
-    for (int i =0 ; i < N; i++){
-        if(parfait(i))
-            printf("%d\n",i);
-    }
+    
     
 }
 
@@ -103,9 +104,7 @@ void parfaitJusquAN(int N){
 // EXERCICE 4
 
 TypeEntier factorielle(TypeEntier n){
-    if(n==1)
+    if(n<=1)
         return 1;
-    if(n>1)
-        return n*factorielle(n-1);
-    return 0;
+    return n*factorielle(n-1);
 }
