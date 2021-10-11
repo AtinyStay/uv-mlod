@@ -18,9 +18,6 @@ int main(int argc, char *argv[]) {
     afficheDate(date);
 
     free(date);
-
-    printf("\n\n%d", nbreJours(fevrier,2100));
-
     return EXIT_SUCCESS;
 }
 
@@ -36,46 +33,7 @@ void initialiseDate(Date* date){
     scanf("%d", &annee);
 
     date->jour = jour;
-    switch (mois){
-        case 1:
-            date->mois = janvier;
-            break;
-        case 2:
-            date->mois = fevrier;
-            break;
-        case 3:
-            date->mois = mars;
-            break;
-        case 4:
-            date->mois = avril;
-            break;
-        case 5:
-            date->mois = mai;
-            break;
-        case 6:
-            date->mois = juin;
-            break;
-        case 7:
-            date->mois = juillet;
-            break;
-        case 8:
-            date->mois = aout;
-            break;
-        case 9:
-            date->mois = septembre;
-            break;
-        case 10:
-            date->mois = octobre;
-            break;
-        case 11:
-            date->mois = novembre;
-            break;
-        case 12:
-            date->mois = decembre;
-            break;
-        default:
-            break;
-    }
+    date->mois = inttomois(mois);
     date->annee = annee;
 }
 
