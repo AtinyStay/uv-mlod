@@ -37,10 +37,12 @@ int main(int argc, char *argv[]) {
     MatrixArray m = readMatrixArray(f);
     printMatrixArray(m);
 
+    // Vérification Q. 5 :
     //printMatrixArray(rotate90ccw(m));
     
-    freeMatrixArray(m);
 
+    freeMatrixArray(m);
+    fclose(f);
     return EXIT_SUCCESS;
 }
 
