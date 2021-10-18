@@ -15,42 +15,47 @@ struct MatrixArray{
 } ;
 typedef struct MatrixArray MatrixArray;
 
+
 Matrix readMatrix(FILE*);
 MatrixArray readMatrixArray(FILE*);
-
 void freeMatrix(Matrix);
 void freeMatrixArray(MatrixArray);
-
 void printMatrix(Matrix);
 void printMatrixArray(MatrixArray);
-
 MatrixArray rotate90ccw(MatrixArray);
 Matrix rotate90ccwMatrix(Matrix);
 
+
 int main(int argc, char *argv[]) {
-    FILE* f;
-    if( (f = fopen("matrices.txt","r")) == NULL) {
+
+    // Ouverture du fichier
+    FILE* monFichier;
+    if( (monFichier = fopen("matrices.txt","r")) == NULL) {
         printf ("Échec de l'ouverture, code de l'erreur : %d\n", errno);
         return EXIT_FAILURE;
     }
 
-    MatrixArray m = readMatrixArray(f);
-    printMatrixArray(m);
+    // Lecture et affichage des matrices
+    MatrixArray monArray = readMatrixArray(monFichier);
+    printMatrixArray(monArray);
 
     // Vérification Q. 5 :
-    //printMatrixArray(rotate90ccw(m));
+    //printMatrixArray(rotate90ccw(monArray));
     
-
-    freeMatrixArray(m);
-    fclose(f);
+    freeMatrixArray(monArray);
+    fclose(monFichier);
     return EXIT_SUCCESS;
 }
 
+
 MatrixArray readMatrixArray(FILE* fichier){
     MatrixArray array;
+
+    // Lecture et allocation du bon nombre de matrices
     fscanf(fichier, "%i", &array.nbMatrices);
     array.matrices =  (Matrix *)calloc(array.nbMatrices, sizeof(Matrix));
 
+    // Lecture de chaque matrice
     for (int i = 0; i < array.nbMatrices; i++){
         array.matrices[i] = readMatrix(fichier);
     }
@@ -60,10 +65,13 @@ MatrixArray readMatrixArray(FILE* fichier){
 
 Matrix readMatrix(FILE* fichier){
     Matrix matrice;
-    fscanf(fichier, "%i %i", &matrice.nbLignes, &matrice.nbColonnes);
 
+    // Lecture et allocation du bon nombre de lignes
+    fscanf(fichier, "%i %i", &matrice.nbLignes, &matrice.nbColonnes);
     matrice.valeurs =  (int **)calloc(matrice.nbLignes, sizeof(int *));
     for (int i = 0; i < matrice.nbLignes; i++){
+
+        //Pour chaque ligne on alloue puis lit le bon nombre de colonnes
         matrice.valeurs[i] =  (int *)calloc(matrice.nbColonnes, sizeof(int));
         for (int j = 0; j < matrice.nbColonnes; j++){
             fscanf(fichier, "%i ", &matrice.valeurs[i][j]);
@@ -95,6 +103,7 @@ void printMatrix(Matrix matrice){
         for (int j = 0; j < matrice.nbColonnes-1; j++){
             printf("%i ", matrice.valeurs[i][j]);
         }
+        // Affichage de la dernère valeur sans espace après pour que le fichier de sortie soit exactement identique à celui d'entrée
         printf("%i", matrice.valeurs[i][matrice.nbColonnes-1]);
     }
 }
