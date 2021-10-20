@@ -156,22 +156,24 @@ Liste retirePremier_r(Element v, Liste l) {
 	if(estVide(l))
 		return NULL;
 
-	if(estVide(l->suiv))
-		if (equalsElement(v, l->val)){
-			detruireElement(l->val);
-			free(l);
-			return NULL;
-		}else{
-			return l;
-		}
-		
-	if(equalsElement(v, l->suiv->val)){
-		Liste tmp = l->suiv->suiv;
-		detruireElement(l->suiv->val);
-		free(l->suiv);
-		l->suiv = tmp;
+	if (equalsElement(v, l->val)){
+		Liste tmp = l->suiv;
+		detruireElement(l->val);
+		free(l);
+		return tmp;
 	}
 
+	if (!estVide(l->suiv)){
+		if(equalsElement(v, l->suiv->val)){
+			Liste tmp = l->suiv->suiv;
+			detruireElement(l->suiv->val);
+			free(l->suiv);
+			l->suiv = tmp;
+		}else{
+			retirePremier_r(v,l->suiv);
+		}
+	}
+	
 	return l;
 }
 
