@@ -34,7 +34,9 @@ void afficheListe_i(Liste l);
 // version recursive
 void afficheListe_r(Liste l);
 
-void detruireElement(Element e);
+void afficheEnvers_r(Liste l);
+
+extern void detruireElement(Element e);
 
 // Détruit tous les éléments de la liste l
 // version itérative
@@ -65,5 +67,3 @@ Liste retirePremier_i(Element v, Liste l);
 // version recursive
 Liste retirePremier_r(Element v, Liste l);
 
-
-void afficheEnvers_r(Liste l);

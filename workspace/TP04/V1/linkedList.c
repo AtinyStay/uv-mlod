@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define TODO NULL;
-
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l) {
 	return l == NULL;
@@ -23,7 +21,6 @@ Liste ajoutTete(Element v, Liste l) {
 	n->suiv = l;
 	return n;
 }
-
 
 // affiche tous les éléments de la liste l
 // Attention, cette fonction doit être indépendante du type des éléments de la liste
@@ -46,7 +43,12 @@ void afficheListe_r(Liste l) {
 	}
 }
 
-void detruireElement(Element e) {}
+void afficheEnvers_r(Liste l) {
+	if(!estVide(l)){
+		afficheEnvers_r(l->suiv);
+		afficheElement(l->val);
+	}
+}	
 
 // Détruit tous les éléments de la liste l
 // version itérative
@@ -172,10 +174,3 @@ Liste retirePremier_r(Element v, Liste l) {
 	
 	return l;
 }
-
-void afficheEnvers_r(Liste l) {
-	if(!estVide(l)){
-		afficheEnvers_r(l->suiv);
-		afficheElement(l->val);
-	}
-}	

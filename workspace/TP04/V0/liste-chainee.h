@@ -57,6 +57,7 @@ Liste cherche_i(Element v,Liste l);
 // version récursive
 Liste cherche_r(Element v,Liste l);
 
+extern bool equalsElement(Element e1, Element e2);
 // Retourne la liste modifiée dans la laquelle le premier élément ayant la valeur v a été supprimé
 // ne fait rien si aucun élément possède cette valeur
 // version itérative

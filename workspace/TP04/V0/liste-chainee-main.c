@@ -21,14 +21,14 @@ int main(void){
 	l = ajoutTete(4,l);
 	l = ajoutTete(1,l);
 
-	//afficheListe_i(l);
+	afficheListe_i(l);
 
 	ajoutFin_r(99,l);
-	//afficheListe_i(l);
+	afficheListe_i(l);
 
 	ajoutFin_r(100,l);
-	//afficheListe_i(l);
-/*
+	afficheListe_i(l);
+
 	p = cherche_i(200,l);
 	printf("cherche_i(200) : %s\n",estVide(p)?"pas trouve":"[ERREUR] trouve !!!");
 
@@ -51,7 +51,7 @@ int main(void){
 		printf("cherche_r(99) : trouve ");
 		afficheElement(p->val);
 		printf("\n");
-	}*/
+	}
 	afficheListe_r(l);
 
 	printf("\nretirePremier_i(1)   : ");
