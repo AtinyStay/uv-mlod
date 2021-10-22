@@ -124,18 +124,21 @@ Liste cherche_r(Element v,Liste l) {
 // ne fait rien si aucun élément possède cette valeur
 // version itérative
 Liste retirePremier_i(Element v, Liste l) {
-	Liste premier;
+	if(estVide(l))
+		return l;
+
+	Liste premier, t;
 	if(estVide(premier = cherche_i(v, l)))
 		return l;
 
 	if (l == premier ){
-		Liste t = l->suiv;
+		t = l->suiv;
 		detruireElement(t->val);
 		free(l);
 		return t;
 	}
 
-	Liste t = l;
+	t = l;
 	while(t->suiv != premier)
 		t = t->suiv;	
 
