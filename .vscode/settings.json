@@ -2,6 +2,7 @@
     "files.associations": {
         "prixturing.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "linkedlistofmusic.h": "c"
     }
 }

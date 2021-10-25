@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     Liste playlist;
     playlist = readCsv(monFichier);
 
-    playlist = orderByYear(playlist);
+    // playlist = orderByYear(playlist);
 
     afficheListe_i(playlist);
 
@@ -49,12 +49,14 @@ Liste readCsv(FILE* csv){
     char *line, *copy;
     Music* tmp;
 
-    line = calloc(256,sizeof(char));
     
+    line = calloc(256,sizeof(char));
     while (fgets(line, 256, csv) != NULL){
         tmp = (Music *)malloc(sizeof(Music));
 
+        // A free -> Comment !??
         copy = strdup(line);
+
         if (!copy)
             exit(EXIT_FAILURE);
 
@@ -66,8 +68,7 @@ Liste readCsv(FILE* csv){
         tmp->track = strsep(&copy, ",\n");
         tmp->year = strsep(&copy, ",\n");
 
-
-        l = ajoutTete(tmp, l);
+        l = ajoutFin_i(tmp, l);
     }
     free(line);
 
