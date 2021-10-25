@@ -23,3 +23,5 @@ void afficheElement(Element e);
 void detruireElement(Element e);
 
 bool equalsElement(Element m1, Element m2);
+
+Liste orderByYear(Liste l);

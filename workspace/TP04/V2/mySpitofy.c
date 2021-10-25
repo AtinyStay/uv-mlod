@@ -1,9 +1,22 @@
+/** 
+ Compilation
+ gcc -g -Wall -o spitofy mySpitofy.c linkedListOfMusic.c ../V1/linkedList.c
+
+ Execution 
+ ./spitofy > out.txt
+
+ Détection de fuites mémoires
+ valgrind --leak-check=yes --leak-check=full --show-leak-kinds=all --show-reachable=no ./spitofy > out.csv
+**/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 
 #include "linkedListOfMusic.h"
+
+
 Liste readCsv(FILE*);
 
 
@@ -19,9 +32,12 @@ int main(int argc, char *argv[]) {
     Liste playlist;
     playlist = readCsv(monFichier);
 
+    playlist = orderByYear(playlist);
 
-    afficheEnvers_r(playlist);
+    afficheListe_i(playlist);
 
+
+    detruire_i(playlist);
     fclose(monFichier);
     return EXIT_SUCCESS;
 }
@@ -50,9 +66,9 @@ Liste readCsv(FILE* csv){
         tmp->track = strsep(&copy, ",\n");
         tmp->year = strsep(&copy, ",\n");
 
+
         l = ajoutTete(tmp, l);
     }
-
     free(line);
 
     return l;
