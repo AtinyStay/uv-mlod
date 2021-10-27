@@ -19,6 +19,8 @@
 
 Liste readCsv(FILE*);
 
+Music* readLineToMusic(char*);
+
 
 int main(int argc, char *argv[]) {
 
@@ -32,8 +34,10 @@ int main(int argc, char *argv[]) {
     Liste playlist;
     playlist = readCsv(monFichier);
 
+    // Tri dans l'ordre des années 
     // playlist = orderByYear(playlist);
 
+    // Renvoie un retour à la ligne en plus 
     afficheListe_i(playlist);
 
 
@@ -46,32 +50,41 @@ int main(int argc, char *argv[]) {
 Liste readCsv(FILE* csv){
     Liste l;
     l = NULL;
-    char *line, *copy;
-    Music* tmp;
+    char *line;
+    Music* song;
 
-    
     line = calloc(256,sizeof(char));
     while (fgets(line, 256, csv) != NULL){
-        tmp = (Music *)malloc(sizeof(Music));
-
-        // A free -> Comment !??
-        copy = strdup(line);
-
-        if (!copy)
-            exit(EXIT_FAILURE);
-
-        tmp->name = strsep(&copy, ",\n");
-        tmp->artist = strsep(&copy, ",\n");
-        tmp->album = strsep(&copy, ",\n");
-        tmp->genre = strsep(&copy, ",\n");
-        tmp->disc = strsep(&copy, ",\n");
-        tmp->track = strsep(&copy, ",\n");
-        tmp->year = strsep(&copy, ",\n");
-
-        l = ajoutFin_i(tmp, l);
+        song = readLineToMusic(line);
+        l = ajoutFin_i(song, l);
     }
     free(line);
 
     return l;
 }
 
+Music* readLineToMusic(char* line){
+    char *copy, *freeable_copy;
+    Music* tmp;
+    tmp = (Music *)malloc(sizeof(Music));
+
+    // A free -> Comment !??
+    copy = strdup(line);
+    freeable_copy = copy;
+
+    if (!copy)
+        exit(EXIT_FAILURE);
+
+    tmp->name = strsep(&copy, ",\n");
+    tmp->artist = strsep(&copy, ",\n");
+    tmp->album = strsep(&copy, ",\n");
+    tmp->genre = strsep(&copy, ",\n");
+    tmp->disc = strsep(&copy, ",\n");
+    tmp->track = strsep(&copy, ",\n");
+    tmp->year = strsep(&copy, ",\n");
+
+    // Si j'essaie de free le pointeur initial, les données sont corrompues
+    // free(freeable_copy);
+
+    return tmp;
+}
