@@ -142,31 +142,47 @@ void afficheElement(Element e){
 void afficheRGD_r(ArbreBinaire a){
 	if(!estVide(a)){
 		afficheElement(a->val);
-		afficheRGD_r(a->filsGauche);
-		afficheRGD_r(a->filsDroit);
+		if(!estVide(a->filsGauche)){
+			printf("(");
+			afficheGRD_r(a->filsGauche);
+			printf(")");
+		}
+		if(!estVide(a->filsDroit)){
+			printf("(");
+			afficheGRD_r(a->filsDroit);
+			printf(")");
+		}
 	}
 }
 
 void afficheGRD_r(ArbreBinaire a){
 	if(!estVide(a)){
-		if(!estVide(a->filsGauche))
+		if(!estVide(a->filsGauche)){
 			printf("(");
-		afficheGRD_r(a->filsGauche);
-		if(!estVide(a->filsGauche))
+			afficheGRD_r(a->filsGauche);
 			printf(")");
+		}
 		afficheElement(a->val);
-		if(!estVide(a->filsDroit))
+		if(!estVide(a->filsDroit)){
 			printf("(");
-		afficheGRD_r(a->filsDroit);
-		if(!estVide(a->filsDroit))
+			afficheGRD_r(a->filsDroit);
 			printf(")");
+		}
 	}
 }
 
 void afficheGDR_r(ArbreBinaire a){
 	if(!estVide(a)){
-		afficheGDR_r(a->filsGauche);
-		afficheGDR_r(a->filsDroit);
+		if(!estVide(a->filsGauche)){
+			printf("(");
+			afficheGRD_r(a->filsGauche);
+			printf(")");
+		}
+		if(!estVide(a->filsDroit)){
+			printf("(");
+			afficheGRD_r(a->filsDroit);
+			printf(")");
+		}
 		afficheElement(a->val);
 	}
 }
@@ -188,7 +204,7 @@ ArbreBinaire max(ArbreBinaire a){
 		return NULL;
 	if(estVide(a->filsDroit))
 		return a;
-	return min(a->filsDroit);
+	return max(a->filsDroit);
 }
 
 
@@ -212,34 +228,71 @@ ArbreBinaire recherche_r(ArbreBinaire a, Element e){
 // suppime x de a
 ArbreBinaire supprimer_r(ArbreBinaire a,Element e)
 {
-	ArbreBinaire papa = pere(a, e);
-	if(estVide(papa))
-		return NULL;
+	ArbreBinaire noeud = recherche_r(a, e);
+	if(estVide(noeud))
+		return a;
 
-	ArbreBinaire noeudElem, filsDElem, filsGElem, successeur;
+	ArbreBinaire papa;
+	papa = pere(a, e);
 
-	noeudElem = e < papa->val ? papa->filsGauche : papa->filsDroit;
-	filsDElem = noeudElem->filsDroit;
-	filsGElem = noeudElem->filsGauche; 
-	
-	detruireElement(noeudElem->val);
-	free(noeudElem);
+	// Cas n°1 : L'élément à supprimer n'a pas de fils
+	if(estVide(noeud->filsDroit) && estVide(noeud->filsGauche)){
+		if(e < papa->val){
+			papa->filsGauche = NULL;
+		}else{
+			papa->filsDroit = NULL;
+		}
 
-	successeur = max(filsGElem);
-	if(!estVide(successeur->filsDroit) || !estVide(successeur->filsGauche))
-		return supprimer_r(filsGElem, successeur->val);
+		detruireElement(noeud->val);
+		free(noeud);
+		return a;
+	}
 
-	successeur->filsDroit = filsDElem;
-	successeur->filsGauche = filsGElem;
+	ArbreBinaire successeur;
+	// Cas n°2 : l'élément à supprimer a deux fils
+	if(!estVide(noeud->filsDroit) && !estVide(noeud->filsGauche)){
+		successeur = max(noeud->filsGauche);
+		successeur->filsDroit = noeud->filsDroit;
 
-	ArbreBinaire papaSuc = pere(filsGElem, successeur->val);
-	papaSuc->filsDroit = NULL;
+		if(estVide(papa))
+			return noeud->filsGauche;
 
-	if(papa->val < e){
-		papa->filsDroit = successeur;
+		if(e < papa->val){
+			papa->filsGauche = successeur;
+		}else{
+			papa->filsDroit = successeur;
+		}
 
-	}else{
-		papa->filsGauche = successeur;
+		detruireElement(noeud->val);
+		free(noeud);
+		return a;
+	}
+
+	// Cas n°3 : l'élément à supprimer a un seul fils
+	// 	- à gauche
+	if(!estVide(noeud->filsGauche)){
+		if(e < papa->val){
+			papa->filsGauche = noeud->filsGauche;
+		}else{
+			papa->filsDroit = noeud->filsGauche;
+		}
+
+		detruireElement(noeud->val);
+		free(noeud);
+		return a;
+	}
+
+	//	- à droite
+	if(!estVide(papa->filsDroit)){
+		if(e < papa->val){
+			papa->filsGauche = noeud->filsDroit;
+		}else{
+			papa->filsDroit = noeud->filsDroit;
+		}
+
+		detruireElement(noeud->val);
+		free(noeud);
+		return a;
 	}
 
 	return a;
@@ -255,4 +308,3 @@ void detruire_r(ArbreBinaire a){
 		free(a);
 	}
 }
-
